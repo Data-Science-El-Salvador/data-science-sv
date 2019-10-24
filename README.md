@@ -9,7 +9,7 @@ Inteligencia Artificial.
 Este repositorio contiene materiales de las siguientes
 actividades:
 
-* [Talleres]()
+* [Talleres](https://github.com/Data-Science-El-Salvador/data-science-sv/tree/master/talleres)
 
 
 # Como contribuir al repositorio
