@@ -4,6 +4,9 @@
 # Jupyter notebook
 .ipynb_checkpoints
 
+# numpy arrays
+*.npy
+
 # logs
 logs/*
 tf_logs/*
