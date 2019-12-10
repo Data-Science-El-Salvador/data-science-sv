@@ -1,17 +1,18 @@
 #!/usr/bin/env python
+# Importamos el paquete sys para poder accesar stdin (entrada estandar)
 import sys
 
-# input comes from STDIN (standard input)
+# Iniciamos un for loop o bucle for cada linea en stdin
 for line in sys.stdin:
-    # remove leading and trailing whitespace
+    # Removemos espacios en blanco a la derecha e izquierda de cada linea
     line = line.strip()
-    # split the line into words
+    # Luego dividimos la linea en una lista. split por defecto usa espacios para dividir
     words = line.split()
-    # iterate over words from line
+    # Luego empezamos un nuevo for loop para cada palabra en la lista de palabras
     for word in words:
-        # write the results to STDOUT (standard output);
-        # what we output here will be the input for the
-        # reduce step, i.e. the input for reducer.py
+        # Escribimos los resultados a stdout (salida estandar);
+        # Lo que escribamos aqui se convertira en la entrada para la fase reduce
         #
-        # tab-delimited; the trivial word count is 1
+        # Delimitado por tabulador - aqui simplemente imprimimos la cuenta de cada palabra
+        # La cual siempre sera 1
         print('%s\t%s' % (word, 1))
