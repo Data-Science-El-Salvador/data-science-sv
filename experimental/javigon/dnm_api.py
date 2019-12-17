@@ -5,6 +5,7 @@ import time
 import logging
 import sys
 import psycopg2 as pg
+import string
 from datetime import datetime, timezone
 import databaseconfig as config
 from sqlalchemy import create_engine, MetaData, Table, select
@@ -40,7 +41,7 @@ def process_products(products, session):
                        "registry_num": prod['noregistro'],
                        "formula": prod['formula'],
                        "active_ingredient": prod['principio_activo'],
-                       "pharmaceutical_comp": prod['laboratorio'],
+                       "pharma_comp": prod['laboratorio'],
                        "pharmaceutical_form": prod['NOMBRE_FORMA_FARMACEUTICA'],
                        "level_price": prod['precio_nivel'],
                        "concentration": prod['concentracion'],
@@ -64,13 +65,23 @@ def process_products(products, session):
 def get_products(url):
     session=Session()
     response = requests.get(url) 
-    while  response.status_code == 200:
+    try:  
+        response.status_code == 200
         products = response.json()['data']
-        next_url = response.json()['next_page_url']
         process_products(products, session)
         session.close()
-        time.sleep(3)
-        get_products(next_url)
+        next_url = response.json()['next_page_url']
+        next_url = next_url.replace('/?', '?')
+    except requests.exceptions.Timeout():
+        time.sleep(1)
+        get_products(url)
+    except.requests.exceptions.RequestException as e:
+        _logger.warning(e)
+        sys.exit(1)
+    _logger.info(next_url)
+    return get_products(next_url)
+        
+        
    
 def run():
     get_products(products_api)
